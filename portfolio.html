@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harsh Ranpura - AI/ML Portfolio</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #1a1a40, #2a4066, #3d5a80, #577590);
+            background-attachment: fixed;
+            color: #fff;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Enhanced neural network background */
+        .nodes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .node {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #00d4ff;
+            border-radius: 50%;
+            animation: float 8s infinite ease-in-out, glow 3s infinite alternate;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.7);
+        }
+
+        .node:nth-child(2) { top: 15%; left: 65%; animation-delay: 1.5s; }
+        .node:nth-child(3) { top: 45%; left: 25%; animation-delay: 3s; }
+        .node:nth-child(4) { top: 75%; left: 55%; animation-delay: 4.5s; }
+        .node:nth-child(5) { top: 25%; left: 85%; animation-delay: 6s; }
+        .node:nth-child(6) { top: 60%; left: 10%; animation-delay: 7.5s; }
+
+        .nodes::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(45deg, rgba(0, 212, 255, 0.1) 0, rgba(0, 212, 255, 0.1) 2px, transparent 2px, transparent 30px);
+            opacity: 0.4;
+            animation: pulse 6s infinite;
+        }
+
+        nav {
+            background: rgba(26, 26, 64, 0.95);
+            padding: 1.5rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 10;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid #00d4ff;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin: 0 30px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #00d4ff;
+            transform: scale(1.1);
+        }
+
+        section {
+            padding: 100px 20px;
+            margin: 0 auto;
+            max-width: 1100px;
+        }
+
+        #home {
+            text-align: center;
+            padding: 180px 20px;
+            background: linear-gradient(135deg, #0288d1, #00bcd4, #4dd0e1);
+            border-radius: 0 0 70px 70px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #home::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+            opacity: 0.3;
+        }
+
+        #home h1 {
+            font-size: 3.5em;
+            margin: 0;
+            animation: fadeIn 1.5s ease-in-out;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        #home p {
+            font-size: 1.3em;
+            margin: 10px 0;
+        }
+
+        h2 {
+            color: #fff;
+            font-size: 2.5em;
+            position: relative;
+            display: inline-block;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 5px;
+            background: #00d4ff;
+            bottom: -15px;
+            left: 0;
+            border-radius: 3px;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .job, .project {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: #1a1a40;
+            border-left: 5px solid #00d4ff;
+        }
+
+        .job:hover, .project:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            background: rgba(225, 245, 254, 0.9);
+            margin: 12px 0;
+            padding: 12px;
+            border-radius: 8px;
+            color: #1a1a40;
+            transition: background 0.3s ease;
+        }
+
+        ul li:hover {
+            background: rgba(0, 212, 255, 0.2);
+        }
+
+        a {
+            color: #0288d1;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        a:hover {
+            color: #00d4ff;
+            text-decoration: underline;
+        }
+
+        /* Contact Icons */
+        #contact p i {
+            margin-right: 12px;
+            color: #00d4ff;
+            font-size: 1.2em;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-25px) translateX(10px); }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 10px rgba(0, 212, 255, 0.5); }
+            100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.8); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.6; }
+        }
+
+        section:not(#home) {
+            animation: fadeIn 1s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background Nodes -->
+    <div class="nodes">
+        <div class="node" style="top: 10%; left: 20%;"></div>
+        <div class="node"></div>
+        <div class="node"></div>
+        <div class="node"></div>
+        <div class="node"></div>
+        <div class="node"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Home Section -->
+    <section id="home">
+        <h1>Harsh Ranpura</h1>
+        <img src="your-photo.jpg" alt="Harsh Ranpura" style="border-radius: 50%; width: 150px; margin: 20px auto; display: block;">
+        <p>AI/ML & Data Analytics Engineer | MS in Computer Science</p>
+        <p>Transforming Data into Intelligence with Cutting-Edge Technology</p>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <h2>Core Competencies</h2>
+        <ul>
+            <li>Software Development: Python, Java, C++, JavaScript</li>
+            <li>Machine Learning & AI: AI-driven systems, prediction models</li>
+            <li>Cloud Computing: AWS, GCP</li>
+            <li>Database Management: MySQL, PostgreSQL, MongoDB</li>
+            <li>DevOps & MLOps: CI/CD pipelines, automation</li>
+            <li>Full-Stack Development: Flask, Node.js, Angular</li>
+        </ul>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+        <h2>Experience</h2>
+        <div class="job">
+            <h3>AxisRay - SDF Intern</h3>
+            <p>January 2023 - July 2023</p>
+            <ul>
+                <li>Designed and developed a Machine Learning-powered College Recommendation System tailored for Indian students, analyzing academic profiles to suggest optimal institutions.</li>
+                <li>Completed intensive training in Advanced Java, Machine Learning, and Deep Learning, enhancing technical expertise.</li>
+                <li>Integrated web technologies like HTML with Python and Java to create a user-friendly interface for the recommendation system.</li>
+                <li><strong>Technologies:</strong> Advanced Java, Python, HTML, Machine Learning, Artificial Intelligence, Deep Learning.</li>
+            </ul>
+        </div>
+        <div class="job">
+            <h3>Praxware Technologies - SDF Intern</h3>
+            <p>June 2022 - July 2022</p>
+            <ul>
+                <li>Led the development of a mobile application using Java and Kotlin, focusing on optimizing User Interface (UI) and User Experience (UX) for seamless interaction.</li>
+                <li>Collaborated with a team to implement intuitive design principles, improving app functionality and user satisfaction.</li>
+                <li>Utilized XML and PHP for backend integration, ensuring robust data handling and performance.</li>
+                <li><strong>Technologies:</strong> Java, Kotlin, HTML, XML, PHP.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="project">
+            <h3>SkillSwap Platform</h3>
+            <p>January 2025 - Present</p>
+            <p>Engineered a barter-based skill exchange platform that connects users for peer-to-peer skill trading, featuring secure authentication, real-time chat, and smart contract-based agreements.</p>
+            <p>Designed an interactive dashboard with real-time skill tracking, availability calendars, and user profiles to enhance usability.</p>
+            <p><strong>Tech:</strong> Flask, MongoDB, JavaScript</p>
+        </div>
+        <div class="project">
+            <h3>MLB Game Prediction</h3>
+            <p>August 2023 - December 2023</p>
+            <p>Developed a sophisticated machine learning model to predict Major League Baseball game outcomes with a remarkable 95% accuracy, leveraging historical data and live analytics.</p>
+            <p>Implemented Logistic Regression, Random Forest, and Neural Networks, deploying the model on AWS for real-time predictions during games.</p>
+            <p><strong>Tech:</strong> Python, Logistic Regression, Random Forest, Neural Networks, AWS</p>
+        </div>
+        <div class="project">
+            <h3>Indian College Recommendation System</h3>
+            <p>January 2023 - May 2023</p>
+            <p>Created an AI-powered recommendation engine that matches Indian students to suitable colleges based on grades, preferences, and other factors, achieving a 95% accuracy rate.</p>
+            <p>Analyzed extensive student datasets with Machine Learning algorithms, resulting in a 100% admission rate for recommended colleges.</p>
+            <p><strong>Tech:</strong> Python, Machine Learning</p>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education">
+        <h2>Education</h2>
+        <div class="job">
+            <p><strong>Master of Science, Computer Science</strong> - Loyola Marymount University (2025)</p>
+            <p><strong>Bachelor of Engineering, IT</strong> - Gandhinagar Technological University (2023)</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>Contact</h2>
+        <p><i class="fas fa-envelope"></i>Email: <a href="mailto:harshranpura.1409@gmail.com">harshranpura.1409@gmail.com</a></p>
+        <p><i class="fas fa-phone"></i>Phone: 908-764-2669</p>
+        <p><i class="fab fa-linkedin"></i>LinkedIn: <a href="https://www.linkedin.com/in/harshranpura">www.linkedin.com/in/harshranpura</a></p>
+    </section>
+
+    <script>
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const section = document.querySelector(this.getAttribute('href'));
+                section.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
